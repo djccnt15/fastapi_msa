@@ -1,0 +1,11 @@
+{
+    "tags": [
+        {
+            "name": "default",
+            "externalDocs": {
+                "description": "External docs",
+                "url": "https://djccnt15.github.io/"
+            }
+        }
+    ]
+}
