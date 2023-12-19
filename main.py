@@ -45,8 +45,10 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        app="main:app",
+        # app="main:app",
+        # reload=True,
+        app=app,
         host="0.0.0.0",
         port=8000,
-        reload=True,
+        log_config="src/server/resources/log.ini",
     )
