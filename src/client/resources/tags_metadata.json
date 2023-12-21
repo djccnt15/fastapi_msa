@@ -1,0 +1,27 @@
+{
+    "tags": [
+        {
+            "name": "default",
+            "externalDocs": {
+                "description": "External docs",
+                "url": "https://djccnt15.github.io/"
+            }
+        },
+        {
+            "name": "Server",
+            "description": "Request to main server",
+            "externalDocs": {
+                "description": "External docs",
+                "url": "http://127.0.0.1:8000"
+            }
+        },
+        {
+            "name": "RabbitMQ",
+            "description": "Request to RabbitMQ",
+            "externalDocs": {
+                "description": "External docs",
+                "url": "https://www.rabbitmq.com/"
+            }
+        }
+    ]
+}
