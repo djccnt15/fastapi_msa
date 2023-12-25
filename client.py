@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse, RedirectResponse
 
-from src.client import config
+from src.client import api, config
 
 app = FastAPI(
     title=config.configs("title"),
@@ -18,6 +18,9 @@ app = FastAPI(
     description=config.description,
     openapi_tags=config.tags_metadata,
 )
+
+# API Routers
+app.include_router(router=api.router, prefix="/api")
 
 
 # default APIs
