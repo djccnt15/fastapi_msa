@@ -1,0 +1,19 @@
+uvicorn:
+  host: "0.0.0.0"
+  port: 8000
+fastapi:
+  title: Python Main Server
+  version: 0.0.1
+  contact:
+    name: djccnt15
+    url: https://djccnt15.github.io/
+    email: djccnt15@gmail.com
+  license:
+    name: MIT
+    url: https://en.wikipedia.org/wiki/MIT_License
+  description: description.md
+  tags:
+    - name: default
+      externalDocs:
+        description: External docs
+        url: https://djccnt15.github.io/
