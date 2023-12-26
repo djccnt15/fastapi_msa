@@ -1,22 +1,24 @@
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse, RedirectResponse
 
-from src.client import api, config
+from src.client import api, configs
+
+config = configs.config.fastapi
 
 app = FastAPI(
-    title=config.configs("title"),
-    version=config.configs("version"),
+    title=config.title,
+    version=config.version,
     contact={
-        "name": config.configs("name"),
-        "url": config.configs("url"),
-        "email": config.configs("email"),
+        "name": config.contact.name,
+        "url": config.contact.url,
+        "email": config.contact.email,
     },
     license_info={
-        "name": config.configs("license_name"),
-        "url": config.configs("license_url"),
+        "name": config.license.name,
+        "url": config.license.url,
     },
-    description=config.description,
-    openapi_tags=config.tags_metadata,
+    description=configs.description,
+    openapi_tags=config.tags,
 )
 
 # API Routers
@@ -46,7 +48,7 @@ if __name__ == "__main__":
         # app="client:app",
         # reload=True,
         app=app,
-        host="0.0.0.0",
-        port=8080,
+        host=configs.config.uvicorn.host,
+        port=configs.config.uvicorn.port,
         log_config="src/client/resources/log.ini",
     )

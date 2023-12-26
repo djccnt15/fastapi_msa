@@ -1,16 +1,15 @@
 import aiohttp
 
-from src.client import config
+from src.client import configs
 
 from ..model import ping
 
-host = config.configs("server_host")
-port = config.configs("server_port")
+config = configs.config.server
 
 
 async def request_ping():
     async with aiohttp.ClientSession() as session:
-        async with session.get(f"{host}:{port}/ping") as response:
+        async with session.get(f"{config.host}:{config.port}/ping") as response:
             status = response.status
             body = await response.text()
 

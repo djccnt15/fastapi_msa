@@ -1,0 +1,41 @@
+uvicorn:
+  host: "0.0.0.0"
+  port: 8080
+fastapi:
+  title: Python Test Client
+  version: 0.0.1
+  contact:
+    name: djccnt15
+    url: https://djccnt15.github.io/
+    email: djccnt15@gmail.com
+  license:
+    name: MIT
+    url: https://en.wikipedia.org/wiki/MIT_License
+  description: description.md
+  tags:
+    - name: default
+      externalDocs:
+        description: External docs
+        url: https://djccnt15.github.io/
+    - name: Server
+      description: Request to main server
+      externalDocs:
+        description: External docs
+        url: http://127.0.0.1:8000
+    - name: Redis
+      description: Request to Redis
+      externalDocs:
+        description: External docs
+        url: https://redis.io/
+    - name: RabbitMQ
+      description: Request to RabbitMQ
+      externalDocs:
+        description: External docs
+        url: https://www.rabbitmq.com/
+server:
+  host: http://127.0.0.1
+  port: 8000
+redis:
+  host: 127.0.0.1
+  port: 6379
+  decode_responses: true
