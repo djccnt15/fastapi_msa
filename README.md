@@ -27,6 +27,6 @@ main.py
 
 Used Queue Services in this MSA Architecture
 
-- [] Redis
-- [] RabbitMQ
-- [] Kafka
+- [ ] Redis
+- [ ] RabbitMQ
+- [ ] Kafka
