@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse, RedirectResponse
 
-from src.server import configs
+from src.server import configs, exception
 
 config = configs.config.fastapi
 
@@ -20,6 +20,9 @@ app = FastAPI(
     description=configs.description,
     openapi_tags=config.tags,
 )
+
+# Exception Handler
+exception.add_exception_handlers(app=app)
 
 
 # default APIs
