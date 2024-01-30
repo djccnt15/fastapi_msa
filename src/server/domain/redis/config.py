@@ -1,6 +1,6 @@
 import redis
 
-from src.client import configs
+from src.server import configs
 
 config = configs.config.redis
 
