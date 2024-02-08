@@ -3,6 +3,8 @@ from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import delete, func, insert, select
 
+from src.server.configs import KST
+
 from ..entity import NoticeEntity
 
 
@@ -14,7 +16,7 @@ async def create_notice(
     q = insert(NoticeEntity).values(
         title=title,
         body=body,
-        created_datetime=datetime.now(),
+        created_datetime=datetime.now(KST),
     )
     await db.execute(q)
     await db.commit()
