@@ -15,7 +15,7 @@ class NoticeCreateRequest(NoticeBase):
     body: str = Field(max_length=db.NoticeColumnSize.BODY)
 
 
-class NoticeResponse(common.Id[int], NoticeBase):
+class NoticeResponse(common.IdModel[int], NoticeBase):
     created_datetime: datetime
 
     model_config = ConfigDict(

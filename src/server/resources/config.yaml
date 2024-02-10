@@ -22,6 +22,15 @@ fastapi:
       externalDocs:
         description: External docs
         url: https://redis.io/
+    - name: notice
+db:
+  drivername: mysql+aiomysql
+  username: root
+  password: qwer
+  host: localhost
+  port: 3306
+  database: msa
+  echo: true
 redis:
   host: localhost
   port: 6379

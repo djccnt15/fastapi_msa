@@ -45,6 +45,6 @@ async def notice_detail(
 async def notice_delete(
     id: int,
     db: AsyncSession = Depends(database.get_db),
-) -> common.DeteleSuccess:
+) -> common.DeleteSuccess:
     await notice_process.delete_notice(db=db, id=id)
-    return common.DeteleSuccess()
+    return common.DeleteSuccess()
