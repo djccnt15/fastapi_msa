@@ -1,9 +1,13 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.server.common import exception
-from src.server.db import notice_crud
+from src.server.db import notice_crud, redis_db
 
+from ..converter import notice_converter
 from ..endpoint.model import notice_model
+from .model import service_model
+
+REDIS_NOTICE_KEY = "notice:%s"
 
 
 async def find_notice_by_title(
@@ -43,9 +47,19 @@ async def get_notice_detail(
     db: AsyncSession,
     id: int,
 ):
+    redis_key = REDIS_NOTICE_KEY % id
+    notice_data = redis_db.redis_db.hgetall(name=redis_key)
+
+    if notice_data:
+        notice_redis = service_model.NoticeRedisModel.model_validate(notice_data)
+        return notice_converter.to_NoticeResponse(notice_redis=notice_redis)
+
     notice_data = await notice_crud.notice_detail(db=db, id=id)
     if notice_data:
         notice = notice_model.NoticeResponse.model_validate(notice_data)
+        data = vars(notice_converter.to_NoticeRedisModel(notice_response=notice))
+        with redis_db.redis_conn(name=redis_key, expire_time=30) as r:
+            r.conn.hset(name=r.name, mapping=data)
         return notice
     raise exception.QueryResultEmpty
 
@@ -55,3 +69,4 @@ async def delete_notice(
     id: int,
 ):
     await notice_crud.delete_notice(db=db, id=id)
+    redis_db.redis_db.delete(REDIS_NOTICE_KEY % id)
