@@ -30,7 +30,7 @@ exception.add_exception_handlers(app=app)
 
 # default APIs
 @app.get("/robots.txt", response_class=PlainTextResponse)
-def robots():
+async def robots():
     return "User-agent: *\nDisallow: /"
 
 

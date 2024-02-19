@@ -27,7 +27,7 @@ app.include_router(router=api.router, prefix="/api")
 
 # default APIs
 @app.get("/robots.txt", response_class=PlainTextResponse)
-def robots():
+async def robots():
     return "User-agent: *\nDisallow: /"
 
 
