@@ -1,28 +1,14 @@
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse, RedirectResponse
 
-from src.client import api, configs
+from src.client import api, chat, configs
 
 config = configs.config.fastapi
 
-app = FastAPI(
-    title=config.title,
-    version=config.version,
-    contact={
-        "name": config.contact.name,
-        "url": config.contact.url,
-        "email": config.contact.email,
-    },
-    license_info={
-        "name": config.license.name,
-        "url": config.license.url,
-    },
-    description=configs.description,
-    openapi_tags=config.tags,
-)
+app = FastAPI(**config)
 
 # API Routers
-app.include_router(router=api.router, prefix="/api")
+app.include_router(router=api.router)
 
 
 # default APIs

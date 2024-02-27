@@ -9,11 +9,7 @@ from .model import redis_model
 
 config = configs.config.redis
 
-redis_db = redis.Redis(
-    host=config.host,
-    port=config.port,
-    decode_responses=config.decode_responses,
-)
+redis_db = redis.Redis(**config)
 
 
 @contextmanager

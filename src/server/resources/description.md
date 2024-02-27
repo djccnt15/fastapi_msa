@@ -1,5 +1,0 @@
-## Description
-
-Main Python Server
-
----

@@ -1,6 +1,7 @@
 uvicorn:
   host: "0.0.0.0"
   port: 8000
+
 fastapi:
   title: Python Main Server
   version: 0.0.1
@@ -8,11 +9,11 @@ fastapi:
     name: djccnt15
     url: https://djccnt15.github.io/
     email: djccnt15@gmail.com
-  license:
+  license_info:
     name: MIT
     url: https://en.wikipedia.org/wiki/MIT_License
-  description: description.md
-  tags:
+  description: Main Python Server
+  openapi_tags:
     - name: default
       externalDocs:
         description: External docs
@@ -23,15 +24,26 @@ fastapi:
         description: External docs
         url: https://redis.io/
     - name: notice
+      description: Notice function with Redis Cache aside Pattern
+      externalDocs:
+        description: Cache aside Pattern
+        url: https://djccnt15.github.io/blog/sw-engineering/cache-pattern/#cache-aside-pattern
+
 db:
-  drivername: mysql+aiomysql
-  username: root
-  password: qwer
-  host: localhost
-  port: 3306
-  database: msa
-  echo: true
+  url:
+    drivername: mysql+aiomysql
+    username: root
+    password: qwer
+    host: localhost
+    port: 3306
+    database: msa
+  engine:
+    pool_pre_ping: true
+    pool_recycle: 3600
+    echo: false
+
 redis:
-  host: localhost
+  host: 127.0.0.1
   port: 6379
   decode_responses: true
+  db: 0

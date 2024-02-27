@@ -1,7 +1,7 @@
-from enum import StrEnum
+from enum import StrEnum, auto
 
 
 class Tags(StrEnum):
-    SERVER = "Server"
-    REDIS = "Redis"
-    RABBIT = "RabbitMQ"
+    SERVER = auto()
+    REDIS = auto()
+    RABBIT = auto()
