@@ -9,6 +9,7 @@ app = FastAPI(**config)
 
 # API Routers
 app.include_router(router=api.router)
+app.include_router(router=chat.router)
 
 
 # default APIs

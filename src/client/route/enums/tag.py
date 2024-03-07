@@ -5,3 +5,4 @@ class Tags(StrEnum):
     SERVER = auto()
     REDIS = auto()
     RABBIT = auto()
+    CHAT = auto()
