@@ -32,7 +32,7 @@ fastapi:
 db:
   url:
     drivername: mysql+aiomysql
-    username: root
+    username: asdf
     password: qwer
     host: localhost
     port: 3306

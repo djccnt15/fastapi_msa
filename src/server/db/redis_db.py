@@ -13,9 +13,12 @@ redis_db = redis.Redis(**config)
 
 
 @contextmanager
-def redis_conn(name: str, expire_time: int | timedelta):
+def redis_conn(
+    *,
+    name: str,
+    expire_time: int | timedelta = 30,
+):
     try:
         yield redis_model.RedisModel(conn=redis_db, name=name)
     finally:
-        if expire_time:
-            redis_db.expire(name=name, time=expire_time)
+        redis_db.expire(name=name, time=expire_time)

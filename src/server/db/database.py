@@ -5,10 +5,8 @@ from src.server import configs
 
 db_config = configs.config.db
 
-SQLALCHEMY_DATABASE_URL = URL.create(**db_config.url)
-
 engine = create_async_engine(
-    url=SQLALCHEMY_DATABASE_URL,
+    url=URL.create(**db_config.url),
     **db_config.engine,
 )
 

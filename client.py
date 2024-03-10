@@ -31,11 +31,13 @@ async def helath():
 if __name__ == "__main__":
     import uvicorn
 
+    config = configs.config.uvicorn
+
     uvicorn.run(
         # app="client:app",
         # reload=True,
         app=app,
-        host=configs.config.uvicorn.host,
-        port=configs.config.uvicorn.port,
-        log_config="src/client/resources/log.ini",
+        host=config.host,
+        port=config.port,
+        log_config=r"src/client/resources/log.ini",
     )

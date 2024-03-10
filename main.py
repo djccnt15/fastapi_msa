@@ -38,11 +38,13 @@ async def ping():
 if __name__ == "__main__":
     import uvicorn
 
+    config = configs.config.uvicorn
+
     uvicorn.run(
         # app="main:app",
         # reload=True,
         app=app,
-        host=configs.config.uvicorn.host,
-        port=configs.config.uvicorn.port,
-        log_config="src/server/resources/log.ini",
+        host=config.host,
+        port=config.port,
+        log_config=r"src/server/resources/log.ini",
     )

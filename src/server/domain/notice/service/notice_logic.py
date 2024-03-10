@@ -11,6 +11,7 @@ REDIS_NOTICE_KEY = "notice:%s"
 
 
 async def find_notice_by_title(
+    *,
     db: AsyncSession,
     data: notice_model.NoticeCreateRequest,
 ):
@@ -19,6 +20,7 @@ async def find_notice_by_title(
 
 
 async def create_notice(
+    *,
     db: AsyncSession,
     data: notice_model.NoticeCreateRequest,
 ):
@@ -26,6 +28,7 @@ async def create_notice(
 
 
 async def get_notice_list(
+    *,
     db: AsyncSession,
     keyword: str,
     page: int,
@@ -44,6 +47,7 @@ async def get_notice_list(
 
 
 async def get_notice_detail(
+    *,
     db: AsyncSession,
     id: int,
 ):
@@ -58,13 +62,14 @@ async def get_notice_detail(
     if notice_data:
         notice = notice_model.NoticeResponse.model_validate(notice_data)
         data = vars(notice_converter.to_NoticeRedisModel(notice_response=notice))
-        with redis_db.redis_conn(name=redis_key, expire_time=30) as r:
+        with redis_db.redis_conn(name=redis_key) as r:
             r.conn.hset(name=r.name, mapping=data)
         return notice
     raise exception.QueryResultEmpty
 
 
 async def delete_notice(
+    *,
     db: AsyncSession,
     id: int,
 ):

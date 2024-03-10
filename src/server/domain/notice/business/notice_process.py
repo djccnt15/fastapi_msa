@@ -7,6 +7,7 @@ from ..service import notice_logic
 
 
 async def create_notice(
+    *,
     db: AsyncSession,
     data: notice_model.NoticeCreateRequest,
 ):
@@ -17,6 +18,7 @@ async def create_notice(
 
 
 async def get_notice_list(
+    *,
     db: AsyncSession,
     keyword: str,
     page: int,
@@ -29,6 +31,7 @@ async def get_notice_list(
 
 
 async def get_notice_detail(
+    *,
     db: AsyncSession,
     id: int,
 ):
@@ -37,6 +40,7 @@ async def get_notice_detail(
 
 
 async def delete_notice(
+    *,
     db: AsyncSession,
     id: int,
 ):
