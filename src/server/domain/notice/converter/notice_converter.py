@@ -1,11 +1,10 @@
 from datetime import datetime
 
-from ..endpoint.model import notice_model
-from ..service.model import service_model
+from ..model import notice_model, redis_model
 
 
 def to_NoticeRedisModel(notice_response: notice_model.NoticeResponse):
-    return service_model.NoticeRedisModel(
+    return redis_model.NoticeRedisModel(
         id=notice_response.id,
         title=notice_response.title,
         body=notice_response.body,
@@ -13,7 +12,7 @@ def to_NoticeRedisModel(notice_response: notice_model.NoticeResponse):
     )
 
 
-def to_NoticeResponse(notice_redis: service_model.NoticeRedisModel):
+def to_NoticeResponse(notice_redis: redis_model.NoticeRedisModel):
     return notice_model.NoticeResponse(
         id=notice_redis.id,
         title=notice_redis.title,

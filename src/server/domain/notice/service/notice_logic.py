@@ -4,8 +4,7 @@ from src.server.common import exception
 from src.server.db import notice_crud, redis_db
 
 from ..converter import notice_converter
-from ..endpoint.model import notice_model
-from .model import service_model
+from ..model import notice_model, redis_model
 
 REDIS_NOTICE_KEY = "notice:%s"
 
@@ -55,7 +54,7 @@ async def get_notice_detail(
     notice_data = redis_db.redis_db.hgetall(name=redis_key)
 
     if notice_data:
-        notice_redis = service_model.NoticeRedisModel.model_validate(notice_data)
+        notice_redis = redis_model.NoticeRedisModel.model_validate(notice_data)
         return notice_converter.to_NoticeResponse(notice_redis=notice_redis)
 
     notice_data = await notice_crud.notice_detail(db=db, id=id)

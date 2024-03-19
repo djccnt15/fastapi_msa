@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.server.common import exception
 
-from ..endpoint.model import notice_model
+from ..model import notice_model
 from ..service import notice_logic
 
 

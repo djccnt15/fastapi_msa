@@ -16,11 +16,11 @@ class NoticeCreateRequest(NoticeBase):
 
 
 class NoticeResponse(common.IdModel[int], NoticeBase):
-    created_datetime: datetime
-
     model_config = ConfigDict(
         from_attributes=True,
     )
+
+    created_datetime: datetime
 
 
 class NoticeList(BaseModel):

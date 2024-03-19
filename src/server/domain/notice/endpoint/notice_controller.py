@@ -5,7 +5,7 @@ from starlette import status
 from src.server import common, database
 
 from ..business import notice_process
-from .model import notice_model
+from ..model import notice_model
 
 router = APIRouter(prefix="/notice")
 
