@@ -33,7 +33,7 @@ async def get_notice_list(
     page: int,
     size: int,
 ):
-    total: int = await notice_crud.notice_count(db=db, keyword=keyword)
+    total = await notice_crud.notice_count(db=db, keyword=keyword)
     if not total:
         raise exception.QueryResultEmpty
     notice_list = await notice_crud.notice_list(

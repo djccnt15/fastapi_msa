@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.sql import delete, func, insert, select
+from sqlalchemy.sql import delete, func, insert, or_, select
 
 from src.server.configs import KST
 
@@ -35,13 +35,16 @@ async def notice_count(
     db: AsyncSession,
     keyword: str,
 ):
-    q = select(NoticeEntity)
+    q = select(func.count(NoticeEntity.id))
     if keyword:
         keyword = f"%{keyword}%"
         q = q.where(
-            NoticeEntity.title.ilike(keyword) | NoticeEntity.body.ilike(keyword)
+            or_(
+                NoticeEntity.title.ilike(keyword),
+                NoticeEntity.body.ilike(keyword),
+            )
         )
-    total = await db.execute(select(func.count()).select_from(q))
+    total = await db.execute(q)
     return total.scalar()
 
 
