@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Iterable
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -25,4 +26,4 @@ class NoticeResponse(common.IdModel[int], NoticeBase):
 
 class NoticeList(BaseModel):
     total: int
-    notice_list: list[NoticeResponse]
+    notice_list: Iterable[NoticeResponse]

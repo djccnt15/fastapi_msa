@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from src.server import common, database
+from src.server import database, response
 
 from ..business import notice_process
 from ..model import notice_model
@@ -14,12 +14,12 @@ router = APIRouter(prefix="/notice")
 async def create_notice(
     data: notice_model.NoticeCreateRequest,
     db: AsyncSession = Depends(database.get_db),
-) -> common.CreateSuccess:
+) -> response.ResponseEnum:
     await notice_process.create_notice(db=db, data=data)
-    return common.CreateSuccess()
+    return response.ResponseEnum.CREATE
 
 
-@router.get(path="/list")
+@router.get(path="/")
 async def notice_list(
     keyword: str = "",
     page: int = 0,
@@ -45,6 +45,6 @@ async def notice_detail(
 async def notice_delete(
     id: int,
     db: AsyncSession = Depends(database.get_db),
-) -> common.DeleteSuccess:
+) -> response.ResponseEnum:
     await notice_process.delete_notice(db=db, id=id)
-    return common.DeleteSuccess()
+    return response.ResponseEnum.DELETE

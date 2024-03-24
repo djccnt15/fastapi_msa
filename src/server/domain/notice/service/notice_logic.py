@@ -39,9 +39,12 @@ async def get_notice_list(
     notice_list = await notice_crud.notice_list(
         db=db, keyword=keyword, offset=page * size, limit=size
     )
+    response_list = (
+        notice_model.NoticeResponse.model_validate(obj=x) for x in notice_list
+    )
     return notice_model.NoticeList(
         total=total,
-        notice_list=notice_list,  # type: ignore
+        notice_list=response_list,
     )
 
 
