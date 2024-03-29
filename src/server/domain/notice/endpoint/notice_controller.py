@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from src.server import database, response
+from src.server.common.model import enum
+from src.server.db import database
 
 from ..business import notice_process
 from ..model import notice_model
@@ -14,9 +15,9 @@ router = APIRouter(prefix="/notice")
 async def create_notice(
     data: notice_model.NoticeCreateRequest,
     db: AsyncSession = Depends(database.get_db),
-) -> response.ResponseEnum:
+) -> enum.ResponseEnum:
     await notice_process.create_notice(db=db, data=data)
-    return response.ResponseEnum.CREATE
+    return enum.ResponseEnum.CREATE
 
 
 @router.get(path="/")
@@ -45,6 +46,6 @@ async def notice_detail(
 async def notice_delete(
     id: int,
     db: AsyncSession = Depends(database.get_db),
-) -> response.ResponseEnum:
+) -> enum.ResponseEnum:
     await notice_process.delete_notice(db=db, id=id)
-    return response.ResponseEnum.DELETE
+    return enum.ResponseEnum.DELETE

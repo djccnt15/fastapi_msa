@@ -1,39 +1,20 @@
 from fastapi import FastAPI
-from starlette.responses import PlainTextResponse, RedirectResponse
 
-from src.server import api, configs, exception
+from src.server import configs
+from src.server.common.exception import handlers as exception_handler
+from src.server.route import api as api_router
+from src.server.route import default as default_router
 
 config = configs.config.fastapi
 
 app = FastAPI(**config)
 
 # API Routers
-app.include_router(router=api.router)
+app.include_router(router=default_router.router)
+app.include_router(router=api_router.router)
 
 # Exception Handler
-exception.add_exception_handlers(app=app)
-
-
-# default APIs
-@app.get("/robots.txt", response_class=PlainTextResponse)
-async def robots():
-    return "User-agent: *\nDisallow: /"
-
-
-@app.get("/", response_class=RedirectResponse)
-async def root():  # temporal index page redirect to swagger
-    return "/docs"
-
-
-@app.get("/health")
-async def helath():
-    return 1
-
-
-@app.get("/ping", response_class=PlainTextResponse)
-async def ping():
-    return "pong"
-
+exception_handler.add_handlers(app=app)
 
 if __name__ == "__main__":
     import uvicorn

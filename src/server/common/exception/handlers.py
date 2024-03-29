@@ -6,7 +6,7 @@ from starlette.responses import JSONResponse
 from .exceptions import NotUniqueException, QueryResultEmpty
 
 
-def add_exception_handlers(app: FastAPI) -> None:
+def add_handlers(app: FastAPI) -> None:
     @app.exception_handler(exc_class_or_status_code=NotUniqueException)
     async def unique_exception_handler(
         request: Request,

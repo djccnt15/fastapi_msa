@@ -1,4 +1,3 @@
-from enum import StrEnum
 from typing import Generic, TypeVar
 from uuid import UUID
 
@@ -9,8 +8,3 @@ ID = TypeVar("ID", int, UUID)
 
 class IdModel(BaseModel, Generic[ID]):
     id: ID
-
-
-class ResponseEnum(StrEnum):
-    CREATE = "create success"
-    DELETE = "delete success"

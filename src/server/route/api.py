@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from ..domain import notice_controller, redis_controller
+from ..domain.notice.endpoint import notice_controller
+from ..domain.redis.endpoint import redis_controller
 from .enums import tag
 
 router = APIRouter(prefix="/api")

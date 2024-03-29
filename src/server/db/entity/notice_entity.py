@@ -1,21 +1,21 @@
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, String
 
-from .base_entity import BaseEntity
-from .enum import NoticeColumnSize
+from . import base_entity
+from .enum import notice_enum
 
 
-class NoticeEntity(BaseEntity):
+class NoticeEntity(base_entity.BaseEntity):
     __tablename__ = "notice_list"
 
     title = Column(
-        type_=String(NoticeColumnSize.TITLE.value),
+        type_=String(notice_enum.NoticeColumnSize.TITLE.value),
         name="title",
         nullable=False,
         unique=True,
     )
     body = Column(
-        type_=String(NoticeColumnSize.BODY.value),
+        type_=String(notice_enum.NoticeColumnSize.BODY.value),
         name="body",
         nullable=False,
     )

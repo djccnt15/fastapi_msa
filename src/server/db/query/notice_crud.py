@@ -5,7 +5,7 @@ from sqlalchemy.sql import delete, func, insert, or_, select
 
 from src.server.configs import KST
 
-from ..entity import NoticeEntity
+from ..entity.notice_entity import NoticeEntity
 
 
 async def create_notice(

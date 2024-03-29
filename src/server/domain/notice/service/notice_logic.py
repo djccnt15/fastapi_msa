@@ -1,7 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.server.common import exception
-from src.server.db import notice_crud, redis_db
+from src.server.common.exception import exceptions
+from src.server.db import redis_db
+from src.server.db.query import notice_crud
 
 from ..converter import notice_converter
 from ..model import notice_model, redis_model
@@ -35,7 +36,7 @@ async def get_notice_list(
 ):
     total = await notice_crud.notice_count(db=db, keyword=keyword)
     if not total:
-        raise exception.QueryResultEmpty
+        raise exceptions.QueryResultEmpty
     notice_list = await notice_crud.notice_list(
         db=db, keyword=keyword, offset=page * size, limit=size
     )
@@ -57,17 +58,17 @@ async def get_notice_detail(
     notice_data = redis_db.redis_db.hgetall(name=redis_key)
 
     if notice_data:
-        notice_redis = redis_model.NoticeRedisModel.model_validate(notice_data)
+        notice_redis = redis_model.NoticeRedisModel.model_validate(obj=notice_data)
         return notice_converter.to_NoticeResponse(notice_redis=notice_redis)
 
     notice_data = await notice_crud.notice_detail(db=db, id=id)
     if notice_data:
-        notice = notice_model.NoticeResponse.model_validate(notice_data)
+        notice = notice_model.NoticeResponse.model_validate(obj=notice_data)
         data = vars(notice_converter.to_NoticeRedisModel(notice_response=notice))
         with redis_db.redis_conn(name=redis_key) as r:
             r.conn.hset(name=r.name, mapping=data)
         return notice
-    raise exception.QueryResultEmpty
+    raise exceptions.QueryResultEmpty
 
 
 async def delete_notice(

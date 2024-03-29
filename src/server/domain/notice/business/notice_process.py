@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.server.common import exception
+from src.server.common.exception import exceptions
 
 from ..model import notice_model
 from ..service import notice_logic
@@ -13,7 +13,7 @@ async def create_notice(
 ):
     notice = await notice_logic.find_notice_by_title(db=db, data=data)
     if notice:
-        raise exception.NotUniqueException(obj="title", detail=data.title)
+        raise exceptions.NotUniqueException(obj="title", detail=data.title)
     await notice_logic.create_notice(db=db, data=data)
 
 

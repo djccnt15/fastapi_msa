@@ -3,7 +3,8 @@ from typing import Iterable
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.server import common, db
+from src.server.common.model import common_model
+from src.server.db.entity.enum import notice_enum
 
 
 class NoticeBase(BaseModel):
@@ -12,11 +13,11 @@ class NoticeBase(BaseModel):
 
 
 class NoticeCreateRequest(NoticeBase):
-    title: str = Field(max_length=db.NoticeColumnSize.TITLE)
-    body: str = Field(max_length=db.NoticeColumnSize.BODY)
+    title: str = Field(max_length=notice_enum.NoticeColumnSize.TITLE)
+    body: str = Field(max_length=notice_enum.NoticeColumnSize.BODY)
 
 
-class NoticeResponse(common.IdModel[int], NoticeBase):
+class NoticeResponse(common_model.IdModel[int], NoticeBase):
     model_config = ConfigDict(
         from_attributes=True,
     )
