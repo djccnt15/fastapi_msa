@@ -1,7 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
-from redis import exceptions as redis_exception
+from fastapi import APIRouter, Depends
 from redis.client import Redis
-from starlette import status
 
 from src.server.db import redis_db
 
@@ -15,13 +13,5 @@ router = APIRouter(prefix="/redis")
 async def check_ping(
     redis: Redis = Depends(redis_db.get_redis),
 ) -> ping.PongModel:
-    try:
-        response = await redis_process.request_ping(redis=redis)
-    except redis_exception.ConnectionError:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Redis Server Not Answers",
-        )
-    return ping.PongModel(
-        pong=response,
-    )
+    response = await redis_process.request_ping(redis=redis)
+    return ping.PongModel(pong=response)

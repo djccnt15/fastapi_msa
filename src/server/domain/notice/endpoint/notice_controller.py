@@ -27,7 +27,7 @@ async def notice_list(
     page: int = 0,
     size: int = 10,
     db: AsyncSession = Depends(database.get_db),
-) -> notice_model.NoticeList:
+) -> notice_model.NoticeListResponse:
     notice_list = await notice_process.get_notice_list(
         db=db, keyword=keyword, page=page, size=size
     )

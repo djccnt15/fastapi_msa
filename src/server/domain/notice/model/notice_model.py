@@ -25,6 +25,6 @@ class NoticeResponse(common_model.IdModel[int], NoticeBase):
     created_datetime: datetime
 
 
-class NoticeList(BaseModel):
+class NoticeListResponse(BaseModel):
     total: int
     notice_list: Iterable[NoticeResponse]
