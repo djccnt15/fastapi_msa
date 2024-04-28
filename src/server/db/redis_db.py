@@ -1,24 +1,33 @@
 from contextlib import contextmanager
 from datetime import timedelta
 
-import redis
+from redis.client import Redis
+from redis.connection import ConnectionPool
 
 from src.server import configs
 
-from .model import redis_model
-
 config = configs.config.redis
 
-redis_db = redis.Redis(**config)
+redis_pool = ConnectionPool(**config)
+
+
+def get_redis():
+    r = Redis.from_pool(connection_pool=redis_pool)
+    try:
+        yield r
+    finally:
+        r.close()
 
 
 @contextmanager
-def redis_conn(
+def redis_expire(
     *,
     name: str,
-    expire_time: int | timedelta = 30,
+    time: int | timedelta = 30,
 ):
+    r = Redis.from_pool(connection_pool=redis_pool)
     try:
-        yield redis_model.RedisModel(conn=redis_db, name=name)
+        yield r
     finally:
-        redis_db.expire(name=name, time=expire_time)
+        r.expire(name=name, time=time)
+        r.close()

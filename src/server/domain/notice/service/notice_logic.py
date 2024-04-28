@@ -1,3 +1,4 @@
+from redis.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.server.common.exception import exceptions
@@ -52,10 +53,11 @@ async def get_notice_list(
 async def get_notice_detail(
     *,
     db: AsyncSession,
+    redis: Redis,
     id: int,
 ):
     redis_key = REDIS_NOTICE_KEY % id
-    notice_data = redis_db.redis_db.hgetall(name=redis_key)
+    notice_data = redis.hgetall(name=redis_key)
 
     if notice_data:
         notice_redis = redis_model.NoticeRedisModel.model_validate(obj=notice_data)
@@ -65,8 +67,8 @@ async def get_notice_detail(
     if notice_data:
         notice = notice_model.NoticeResponse.model_validate(obj=notice_data)
         data = vars(notice_converter.to_NoticeRedisModel(notice_response=notice))
-        with redis_db.redis_conn(name=redis_key) as r:
-            r.conn.hset(name=r.name, mapping=data)
+        with redis_db.redis_expire(name=redis_key) as r:
+            r.hset(name=redis_key, mapping=data)
         return notice
     raise exceptions.QueryResultEmpty
 
@@ -74,7 +76,8 @@ async def get_notice_detail(
 async def delete_notice(
     *,
     db: AsyncSession,
+    redis: Redis,
     id: int,
 ):
     await notice_crud.delete_notice(db=db, id=id)
-    redis_db.redis_db.delete(REDIS_NOTICE_KEY % id)
+    redis.delete(REDIS_NOTICE_KEY % id)

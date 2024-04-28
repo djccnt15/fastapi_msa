@@ -1,3 +1,4 @@
+from redis.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.server.common.exception import exceptions
@@ -33,15 +34,17 @@ async def get_notice_list(
 async def get_notice_detail(
     *,
     db: AsyncSession,
+    redis: Redis,
     id: int,
 ):
-    notice_detail = await notice_logic.get_notice_detail(db=db, id=id)
+    notice_detail = await notice_logic.get_notice_detail(db=db, id=id, redis=redis)
     return notice_detail
 
 
 async def delete_notice(
     *,
     db: AsyncSession,
+    redis: Redis,
     id: int,
 ):
-    await notice_logic.delete_notice(db=db, id=id)
+    await notice_logic.delete_notice(db=db, id=id, redis=redis)
