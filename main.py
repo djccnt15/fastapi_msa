@@ -19,13 +19,10 @@ exception_handler.add_handlers(app=app)
 if __name__ == "__main__":
     import uvicorn
 
-    config = configs.config.uvicorn
+    uvicorn_config = configs.config.uvicorn
 
     uvicorn.run(
-        # app="main:app",
-        # reload=True,
+        # app="main:app",  # use this line when reload config is true
         app=app,
-        host=config.host,
-        port=config.port,
-        log_config=r"src/server/resources/log.ini",
+        **uvicorn_config
     )

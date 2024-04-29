@@ -1,6 +1,8 @@
 uvicorn:
   host: "0.0.0.0"
   port: 8080
+  # reload: true
+  log_config: src/client/resources/log.ini
 
 fastapi:
   title: Python Test Client
