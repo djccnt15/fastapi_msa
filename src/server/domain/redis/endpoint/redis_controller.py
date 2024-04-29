@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from redis.client import Redis
+from redis.asyncio.client import Redis
 
 from src.server.db import redis_db
 

@@ -1,6 +1,6 @@
-from typing import Any, Awaitable, Iterable
+from typing import Any, Iterable
 
-from redis.client import Redis
+from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.server.db.entity import NoticeEntity
@@ -54,8 +54,8 @@ async def get_notice_detail_redis(
     *,
     redis: Redis,
     key: str,
-) -> Awaitable[dict[Any, Any]] | dict[Any, Any]:
-    notice_data = redis.hgetall(name=key)
+) -> dict:
+    notice_data = await redis.hgetall(name=key)
     return notice_data
 
 
@@ -76,10 +76,10 @@ async def delete_notice(
     await notice_crud.delete_notice(db=db, id=id)
 
 
-def delete_notice_redis(
+async def delete_notice_redis(
     *,
     redis: Redis,
     key: str,
-) -> Awaitable | Any:
-    res = redis.delete(key)
+) -> Any:
+    res = await redis.delete(key)
     return res

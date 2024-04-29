@@ -1,8 +1,8 @@
-from contextlib import contextmanager
+from contextlib import asynccontextmanager
 from datetime import timedelta
 
-from redis.client import Redis
-from redis.connection import ConnectionPool
+from redis.asyncio.client import Redis
+from redis.asyncio.connection import ConnectionPool
 
 from src.server import configs
 
@@ -11,16 +11,16 @@ config = configs.config.redis
 redis_pool = ConnectionPool(**config)
 
 
-def get_redis():
+async def get_redis():
     r = Redis.from_pool(connection_pool=redis_pool)
     try:
         yield r
     finally:
-        r.close()
+        await r.close()
 
 
-@contextmanager
-def redis_expire(
+@asynccontextmanager
+async def redis_expire(
     *,
     name: str,
     time: int | timedelta = 30,
@@ -29,5 +29,5 @@ def redis_expire(
     try:
         yield r
     finally:
-        r.expire(name=name, time=time)
-        r.close()
+        await r.expire(name=name, time=time)
+        await r.aclose()

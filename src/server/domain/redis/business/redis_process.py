@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from redis import exceptions as redis_exception
-from redis.client import Redis
+from redis.asyncio.client import Redis
 from starlette import status
 
 from ..service import redis_logic
