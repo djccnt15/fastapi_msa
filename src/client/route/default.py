@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
 from ..domain.default.endpoint import default_controller
-from .enums.tag import RouterTagEnum
+from .enums import tag
 
 router = APIRouter()
 
 router.include_router(
     router=default_controller.router,
-    tags=[RouterTagEnum.DEFAULT],
+    tags=[tag.RouterTagEnum.DEFAULT],
 )

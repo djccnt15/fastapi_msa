@@ -3,7 +3,7 @@ from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from src.server.common.model import enum
+from src.server.common.model.enum import ResponseEnum
 from src.server.db import database, redis_db
 
 from ..business import notice_process
@@ -16,9 +16,9 @@ router = APIRouter(prefix="/notice")
 async def create_notice(
     data: notice_model.NoticeCreateRequest,
     db: AsyncSession = Depends(database.get_db),
-) -> enum.ResponseEnum:
+) -> ResponseEnum:
     await notice_process.create_notice(db=db, data=data)
-    return enum.ResponseEnum.CREATE
+    return ResponseEnum.CREATE
 
 
 @router.get(path="")
@@ -49,6 +49,6 @@ async def notice_delete(
     id: int,
     db: AsyncSession = Depends(database.get_db),
     redis: Redis = Depends(redis_db.get_redis),
-) -> enum.ResponseEnum:
+) -> ResponseEnum:
     await notice_process.delete_notice(db=db, id=id, redis=redis)
-    return enum.ResponseEnum.DELETE
+    return ResponseEnum.DELETE

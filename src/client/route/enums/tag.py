@@ -1,7 +1,8 @@
 from enum import StrEnum, auto
 
 
-class Tags(StrEnum):
+class RouterTagEnum(StrEnum):
+    DEFAULT = auto()
     SERVER = auto()
     REDIS = auto()
     RABBIT = auto()
