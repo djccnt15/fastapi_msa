@@ -1,11 +1,11 @@
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, String
 
-from . import base_entity
+from .base_entity import BigintIdEntity
 from .enum import notice_enum
 
 
-class NoticeEntity(base_entity.BaseEntity):
+class NoticeEntity(BigintIdEntity):
     __tablename__ = "notice_list"
 
     title = Column(
