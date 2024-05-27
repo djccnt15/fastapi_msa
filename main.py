@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from src.server import configs
-from src.server.common.exception import handlers as exception_handler
+from src.server.core.exception import handlers as exception_handler
 from src.server.route import api, default
 
 config = configs.config.fastapi

@@ -3,7 +3,7 @@ from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from src.server.common.model.enum import ResponseEnum
+from src.server.core.model.enum import ResponseEnum
 from src.server.db import database, redis_db
 
 from ..business import notice_process

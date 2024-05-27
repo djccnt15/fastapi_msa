@@ -1,6 +1,6 @@
 from pydantic import ConfigDict
 
-from src.server.common.model import common_model
+from src.server.core.model import common_model
 
 from . import notice_model
 

@@ -3,7 +3,7 @@ from typing import Awaitable
 from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.server.common.exception import exceptions
+from src.server.core.exception import NotUniqueException, QueryResultEmpty
 from src.server.db import redis_db
 
 from ..converter import notice_converter
@@ -20,7 +20,7 @@ async def create_notice(
 ) -> None:
     notice = await notice_logic.find_notice_by_title(db=db, data=data)
     if notice:
-        raise exceptions.NotUniqueException(obj="title", detail=data.title)
+        raise NotUniqueException(obj="title", detail=data.title)
     await notice_logic.create_notice(db=db, data=data)
 
 
@@ -33,7 +33,7 @@ async def get_notice_list(
 ) -> notice_model.NoticeListResponse:
     total = await notice_logic.get_notice_count(db=db, keyword=keyword)
     if not total:
-        raise exceptions.QueryResultEmpty
+        raise QueryResultEmpty
     notice_list = await notice_logic.get_notice_list(
         db=db, keyword=keyword, page=page, size=size
     )
@@ -65,12 +65,12 @@ async def get_notice_detail(
 
     notice_data = await notice_logic.get_notice_detail(db=db, id=id)
     if not notice_data:
-        raise exceptions.QueryResultEmpty
+        raise QueryResultEmpty
 
     notice = notice_model.NoticeResponse.model_validate(obj=notice_data)
     data = vars(notice_converter.to_NoticeRedisModel(notice_response=notice))
     async with redis_db.redis_expire(name=redis_key) as r:
-        await r.hset(name=redis_key, mapping=data)
+        await r.hset(name=redis_key, mapping=data)  # type: ignore
 
     return notice
 
